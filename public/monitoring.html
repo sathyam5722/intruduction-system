@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard IDS - Real-time Monitoring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-background text-foreground min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-card border-b border-border z-50 h-16">
+        <div class="flex items-center justify-between px-4 h-full">
+            <div class="flex items-center space-x-4">
+                <button id="sidebar-toggle" class="p-2 hover:bg-muted rounded-lg transition-colors">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                        <i data-lucide="shield" class="w-5 h-5 text-primary-foreground"></i>
+                    </div>
+                    <span class="text-xl font-bold">CyberGuard IDS</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 text-sm">
+                    <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                    <span class="text-muted-foreground">System Online</span>
+                </div>
+                <button class="p-2 hover:bg-muted rounded-lg transition-colors">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                </button>
+                <button class="p-2 hover:bg-muted rounded-lg transition-colors">
+                    <i data-lucide="user" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-card border-r border-border transition-transform duration-300 transform z-40">
+        <nav class="p-4 space-y-2">
+            <a href="index.html" class="nav-item" data-page="dashboard">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="monitoring.html" class="nav-item active" data-page="monitoring">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+                <span>Real-time Monitoring</span>
+            </a>
+            <a href="alerts.html" class="nav-item" data-page="alerts">
+                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                <span>Security Alerts</span>
+            </a>
+            <a href="network.html" class="nav-item" data-page="network">
+                <i data-lucide="network" class="w-5 h-5"></i>
+                <span>Network Analysis</span>
+            </a>
+            <a href="threats.html" class="nav-item" data-page="threats">
+                <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                <span>Threat Intelligence</span>
+            </a>
+            <a href="logs.html" class="nav-item" data-page="logs">
+                <i data-lucide="file-text" class="w-5 h-5"></i>
+                <span>System Logs</span>
+            </a>
+            <a href="settings.html" class="nav-item" data-page="settings">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main-content" class="ml-64 mt-16 p-6 transition-all duration-300">
+        <div class="space-y-6 animate-slide-up">
+            <!-- Control Panel -->
+            <div class="card-elevated bg-card rounded-lg border border-border">
+                <div class="border-b border-border p-6">
+                    <div class="flex items-center justify-between">
+                        <h1 class="text-2xl font-bold flex items-center space-x-2">
+                            <i data-lucide="activity" class="w-6 h-6 text-primary"></i>
+                            <span>Real-time Monitoring</span>
+                            <span id="monitoring-status" class="badge badge-success ml-4">ACTIVE</span>
+                        </h1>
+                        <div class="flex space-x-2">
+                            <button id="toggle-monitoring" class="px-4 py-2 bg-critical hover:bg-critical/80 text-critical-foreground rounded-lg transition-colors">
+                                <i data-lucide="pause" class="w-4 h-4 inline mr-1"></i>
+                                Pause
+                            </button>
+                            <button id="clear-logs" class="px-4 py-2 border border-border hover:bg-muted rounded-lg transition-colors">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4 inline mr-1"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card-interactive bg-card p-6 rounded-lg border border-border">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Packets/Sec</p>
+                            <p id="packets-per-sec" class="text-2xl font-bold text-primary">1,247</p>
+                        </div>
+                        <i data-lucide="network" class="w-8 h-8 text-primary"></i>
+                    </div>
+                </div>
+
+                <div class="card-interactive bg-card p-6 rounded-lg border border-border">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Bandwidth</p>
+                            <p id="bandwidth" class="text-2xl font-bold text-accent">45 Mbps</p>
+                        </div>
+                        <i data-lucide="activity" class="w-8 h-8 text-accent"></i>
+                    </div>
+                </div>
+
+                <div class="card-interactive bg-card p-6 rounded-lg border border-border">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Active Connections</p>
+                            <p id="active-connections" class="text-2xl font-bold text-success">1,024</p>
+                        </div>
+                        <i data-lucide="cpu" class="w-8 h-8 text-success"></i>
+                    </div>
+                </div>
+
+                <div class="card-interactive bg-card p-6 rounded-lg border border-border">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-muted-foreground">Threats Detected</p>
+                            <p id="threats-detected" class="text-2xl font-bold text-critical">2</p>
+                        </div>
+                        <i data-lucide="zap" class="w-8 h-8 text-critical"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Activity Feed -->
+            <div class="card-elevated bg-card rounded-lg border border-border">
+                <div class="border-b border-border p-6">
+                    <h2 class="text-lg font-semibold">Live Network Activity</h2>
+                </div>
+                <div class="p-0">
+                    <div class="max-h-96 overflow-auto">
+                        <table class="w-full">
+                            <thead class="bg-muted/50 sticky top-0">
+                                <tr>
+                                    <th class="text-left p-3 text-sm font-medium">Time</th>
+                                    <th class="text-left p-3 text-sm font-medium">Type</th>
+                                    <th class="text-left p-3 text-sm font-medium">Source</th>
+                                    <th class="text-left p-3 text-sm font-medium">Destination</th>
+                                    <th class="text-left p-3 text-sm font-medium">Protocol</th>
+                                    <th class="text-left p-3 text-sm font-medium">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activity-feed">
+                                <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                        <div id="no-activity" class="p-8 text-center text-muted-foreground" style="display: none;">
+                            No network activity detected. Start monitoring to see real-time events.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script src="monitoring.js"></script>
+</body>
+</html>

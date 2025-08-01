@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard IDS - System Logs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-background text-foreground min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-card border-b border-border z-50 h-16">
+        <div class="flex items-center justify-between px-4 h-full">
+            <div class="flex items-center space-x-4">
+                <button id="sidebar-toggle" class="p-2 hover:bg-muted rounded-lg transition-colors">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                        <i data-lucide="shield" class="w-5 h-5 text-primary-foreground"></i>
+                    </div>
+                    <span class="text-xl font-bold">CyberGuard IDS</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 text-sm">
+                    <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                    <span class="text-muted-foreground">System Online</span>
+                </div>
+                <button class="p-2 hover:bg-muted rounded-lg transition-colors">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                </button>
+                <button class="p-2 hover:bg-muted rounded-lg transition-colors">
+                    <i data-lucide="user" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-card border-r border-border transition-transform duration-300 transform z-40">
+        <nav class="p-4 space-y-2">
+            <a href="index.html" class="nav-item" data-page="dashboard">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="monitoring.html" class="nav-item" data-page="monitoring">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+                <span>Real-time Monitoring</span>
+            </a>
+            <a href="alerts.html" class="nav-item" data-page="alerts">
+                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                <span>Security Alerts</span>
+            </a>
+            <a href="network.html" class="nav-item" data-page="network">
+                <i data-lucide="network" class="w-5 h-5"></i>
+                <span>Network Analysis</span>
+            </a>
+            <a href="threats.html" class="nav-item" data-page="threats">
+                <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                <span>Threat Intelligence</span>
+            </a>
+            <a href="logs.html" class="nav-item active" data-page="logs">
+                <i data-lucide="file-text" class="w-5 h-5"></i>
+                <span>System Logs</span>
+            </a>
+            <a href="settings.html" class="nav-item" data-page="settings">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main-content" class="ml-64 mt-16 p-6 transition-all duration-300">
+        <div class="space-y-6 animate-slide-up">
+            <!-- Log Statistics -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="card-interactive bg-card p-4 rounded-lg border border-primary/50">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-primary">156</div>
+                        <div class="text-sm text-muted-foreground">Total Logs</div>
+                    </div>
+                </div>
+                <div class="card-interactive bg-card p-4 rounded-lg border border-critical/50">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-critical">3</div>
+                        <div class="text-sm text-muted-foreground">Critical</div>
+                    </div>
+                </div>
+                <div class="card-interactive bg-card p-4 rounded-lg border border-warning/50">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-warning">12</div>
+                        <div class="text-sm text-muted-foreground">Warning</div>
+                    </div>
+                </div>
+                <div class="card-interactive bg-card p-4 rounded-lg border border-critical/50">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-critical">8</div>
+                        <div class="text-sm text-muted-foreground">Error</div>
+                    </div>
+                </div>
+                <div class="card-interactive bg-card p-4 rounded-lg border border-info/50">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-info">133</div>
+                        <div class="text-sm text-muted-foreground">Info</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Log Viewer -->
+                <div class="lg:col-span-2 card-elevated bg-card rounded-lg border border-border">
+                    <div class="border-b border-border p-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
+                            <h1 class="text-xl font-bold flex items-center space-x-2">
+                                <i data-lucide="file-text" class="w-5 h-5 text-primary"></i>
+                                <span>System Logs</span>
+                            </h1>
+                            
+                            <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+                                <!-- Search -->
+                                <div class="relative">
+                                    <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground"></i>
+                                    <input
+                                        id="log-search"
+                                        type="text"
+                                        placeholder="Search logs..."
+                                        class="pl-10 w-64 px-3 py-2 border border-border rounded bg-background text-foreground"
+                                    />
+                                </div>
+                                
+                                <!-- Filters -->
+                                <select id="level-filter" class="w-32 px-3 py-2 border border-border rounded bg-background text-foreground">
+                                    <option value="all">All Levels</option>
+                                    <option value="critical">Critical</option>
+                                    <option value="error">Error</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="info">Info</option>
+                                </select>
+                                
+                                <select id="source-filter" class="w-40 px-3 py-2 border border-border rounded bg-background text-foreground">
+                                    <option value="all">All Sources</option>
+                                    <option value="IDS-Core">IDS-Core</option>
+                                    <option value="Auth-Service">Auth-Service</option>
+                                    <option value="Network-Monitor">Network-Monitor</option>
+                                    <option value="System-Monitor">System-Monitor</option>
+                                    <option value="Firewall">Firewall</option>
+                                </select>
+                                
+                                <button class="px-3 py-2 border border-border hover:bg-muted rounded transition-colors">
+                                    <i data-lucide="download" class="w-4 h-4 inline mr-1"></i>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-0">
+                        <div class="h-96 overflow-auto">
+                            <div class="space-y-1" id="logs-container">
+                                <!-- Log entries will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Log Details -->
+                <div class="card-elevated bg-card rounded-lg border border-border">
+                    <div class="border-b border-border p-6">
+                        <h2 class="text-lg font-semibold">Log Details</h2>
+                    </div>
+                    <div class="p-6" id="log-details">
+                        <div class="text-center text-muted-foreground py-8">
+                            Select a log entry to view details
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script src="logs.js"></script>
+</body>
+</html>
